@@ -1,9 +1,10 @@
-require 'net/http'
-require 'net/https'
+require 'rubygems'
+require 'mechanize'
 
-uri = URI.parse("http://google.com/")
-
-http = Net::HTTP.new(uri.host, uri.port)
-request = Net::HTTP::Get.new(uri.request_uri)
-request.basic_auth("username", "password")
-response = http.request(request)
+agent = Mechanize.new { |a| a.follow_meta_refresh = true }
+home_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
+signin_form = home_page.form('LoginTopForm')
+signin_form.Username = 'REPLACE THIS'
+signin_form.password = 'REPLACE THIS'
+loggedin_page = agent.submit('LoginTopForm')
+pp home_page
