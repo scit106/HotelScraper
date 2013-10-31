@@ -1,0 +1,14 @@
+After logging in:
+http://raintreevacationclub.com/auth/login.asp?ID=265&Mode=CheckPassword&lang=English
+
+Above redirects to:
+https://www.raintreevacationclub.com/memberarea.asp?id=266&Login2=True&lang=English
+
+To view resorts (result of clicking view and book resorts)
+https://www.raintreevacationclub.com/map/
+
+Here's the specific resort we care about
+https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/
+
+
+John says to use auto hot key
