@@ -1,0 +1,3 @@
+README
+
+This is a project to login and check when a room might be available for our family's christmas vacation because there is no waiting list for rooms at our timeshare...
