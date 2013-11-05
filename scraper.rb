@@ -13,14 +13,14 @@ home_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/uni
 hotel_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
 booking_page = hotel_page.iframe_with(:href => '/bookingframe.asp?lang=English&resortid=4&MembershipID=50').click
 booking_form = booking_page.form('BookingSearchForm')
-# pp booking_form
 	booking_form.checkinDate = '12/22/2013' # Will make these variables eventually
 	booking_form.checkoutDate = '12/24/2013'
-	# this might need to loop through them, but maybe not since they all have the same name
-		booking_form.checkbox_with(:name => 'selectedSuites').check
-		
-	agent.click(booking_form.link_with(:id => /searchNowButton/))
-	results_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
+		booking_form.checkboxes_with(:name => 'selectedSuites').each do |box|
+			box.check
+		end
+pp booking_form
+	results_page = booking_page.link_with(:id => /searchNowButton/).click
+	# results_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
 output_file = File.open("Siteoutput.txt", "w")
 output_file.puts results_page
 output_file.close
