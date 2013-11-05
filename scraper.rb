@@ -5,23 +5,14 @@ agent = Mechanize.new { |a| a.follow_meta_refresh = true }
 home_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
 	signin_form = home_page.form('LoginTopFormPopup')
 	# TODO: replace the following with ENV variables
-		signin_form.Username = ''
-		signin_form.password = ''
+		signin_form.Username = 'VICKICASMERE@COMCAST.NET'
+		signin_form.password = 'payton'
 	loggedin_page = agent.submit(signin_form)
 
 #now we need to go to the hotel page, input information, and get results
-hotel_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
-booking_page = hotel_page.iframe_with(:href => '/bookingframe.asp?lang=English&resortid=4&MembershipID=50').click
-booking_form = booking_page.form('BookingSearchForm')
-	booking_form.checkinDate = '12/22/2013' # Will make these variables eventually
-	booking_form.checkoutDate = '12/24/2013'
-		booking_form.checkboxes_with(:name => 'selectedSuites').each do |box|
-			box.check
-		end
-pp booking_form
-	results_page = booking_page.link_with(:id => /searchNowButton/).click
+results_page = agent.get('https://www.raintreevacationclub.com/js/bookingAjaxSuites.asp?resortTSWID=1&theLanguage=English&checkinDate=12%2F22%2F2013&checkoutDate=12%2F24%2F2013&numberOfGuests=4&payType=points&currentBalanceLong=262%2C000&MembershipID=50&selectedSuites=%7C2%7C%7C3%7C%7C4%7C')
 	# results_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
 output_file = File.open("Siteoutput.txt", "w")
-output_file.puts results_page
+output_file.puts results_page.body
 output_file.close
 
