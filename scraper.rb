@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'mechanize'
+require 'action_mailer'
 
 agent = Mechanize.new { |a| a.follow_meta_refresh = true }
 home_page = agent.get('https://www.raintreevacationclub.com/vacation-resorts/united-states/park-city/the-miners-club/')
@@ -23,4 +24,34 @@ elsif not results.include? "No Units Available"
 	puts "Success! Rooms might be available"
 else puts "No Units Available"
 end
-	
+
+#Configure and send Emails
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+   :address   => "smtp.gmail.com",
+   :port      => 587,
+   :domain    => "gmail.com",
+   :authentication => :plain,
+   :user_name      => "",
+   :password       => "",
+   :enable_starttls_auto => true
+  }
+ActionMailer::Base.view_paths= File.dirname(__FILE__)
+
+class Mailer < ActionMailer::Base
+
+  def daily_email
+    @var = "var"
+
+    mail(   :to      => "scit106@gmail.com",
+            :from    => "bathrobeman@gmail.com",
+            :subject => "testing mail") do |format|
+                format.html
+    end
+  end
+end
+
+email = Mailer.daily_email
+puts email
+email.deliver
